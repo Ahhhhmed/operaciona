@@ -35,10 +35,10 @@ var model = {
     addNode: function(node){
         nodesArray.push(node)
     },
-    removeEdge: function(id){
-        for (i in this.edgesArray) {
-            if (this.edgesArray[i].id === id){
-                this.edgesArray.slice(i, 1);
+    removeNode: function(id){
+        for (i in this.nodesArray) {
+            if (this.nodesArray[i].id === id){
+                this.nodesArray.slice(i, 1);
                 break;
             }
         }
@@ -50,17 +50,18 @@ var model = {
                 break;
             }
         }
+        this.colorMinimalSpaningTree();
     },
     colorMinimalSpaningTree: function(){
         this.edgesArray.sort(function (a, b){
             return a.value - b.value;
         });
-        var visitedEdges = {};
+        var visitedEdges = new Set();
         for (i in this.edgesArray) {
-            if(!(this.edgesArray[i].from in visitedEdges && this.edgesArray[i].to in visitedEdges)){
+            if(!(visitedEdges.has(this.edgesArray[i].from) && visitedEdges.has(this.edgesArray[i].to))){
                 this.edgesArray[i].color = 'green';
-                visitedEdges[this.edgesArray[i].from] = true;
-                visitedEdges[this.edgesArray[i].to] = true;
+                visitedEdges.add(this.edgesArray[i].from);
+                visitedEdges.add(this.edgesArray[i].to);
             }
             else{
                 this.edgesArray[i].color = 'blue';
@@ -71,33 +72,6 @@ var model = {
 
 
 function startNetwork() {
-    // create an array with nodes
-    /*nodesArray = [
-        {id: 1, label: '1'},
-        {id: 2, label: '2'},
-        {id: 3, label: '3'},
-        {id: 4, label: '4'},
-        {id: 5, label: '5'},
-        {id: 6, label: '6'},
-        {id: 7, label: '7'}
-    ];*/
-    
-
-    // create an array with edges
-    /*edgesArray = [
-        {from: 1, to: 3, value: 4},
-        {from: 1, to: 2, value: 3},
-        {from: 2, to: 4, value: 3},
-        {from: 2, to: 5, value: 5},
-        {from: 1, to: 5, value: 1},
-        {from: 4, to: 6, value: 4},
-        {from: 5, to: 7, value: 3},
-        {from: 7, to: 6, value: 6},
-        {from: 6, to: 5, value: 4},
-
-    ];*/
-    //markTree(edgesArray);
-
     model.init();
     nodes = new vis.DataSet(model.getNodes());
     edges = new vis.DataSet(model.getEdges());
