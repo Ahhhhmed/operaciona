@@ -1,0 +1,14 @@
+{
+  "name": "operaciona",
+  "version": "1.0.0",
+  "description": "seminarski iz operacionih",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Nenad Vasic",
+  "license": "ISC",
+  "dependencies": {
+    "vis": "^4.12.0"
+  }
+}
